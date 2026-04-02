@@ -1,0 +1,44 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/data_ingestion.py
+    outs:
+    - path: data/raw
+      hash: md5
+      md5: dda60646a4a8ef1e88a5e2ebdbb937ac.dir
+      size: 197121
+      nfiles: 1
+  preprocessing:
+    cmd: python src/data_preprocessing.py
+    deps:
+    - path: data/raw
+      hash: md5
+      md5: dda60646a4a8ef1e88a5e2ebdbb937ac.dir
+      size: 197121
+      nfiles: 1
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: fec6d71ca5cd14936e54cd23f5d3cbfb.dir
+      size: 194833
+      nfiles: 2
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/processed
+      hash: md5
+      md5: fec6d71ca5cd14936e54cd23f5d3cbfb.dir
+      size: 194833
+      nfiles: 2
+    outs:
+    - path: models/model.pkl
+      hash: md5
+      md5: fe34b107e531677ab6cc3abdc54ae45b
+      size: 1160060
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: models/model.pkl
+      hash: md5
+      md5: fe34b107e531677ab6cc3abdc54ae45b
+      size: 1160060
