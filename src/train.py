@@ -3,8 +3,12 @@ import mlflow.sklearn
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 import pickle
+import os
 
 mlflow.set_experiment("churn-prediction")
+
+# Ensure mlruns exists
+os.makedirs("mlruns", exist_ok=True)
 
 df = pd.read_csv("data/processed/train.csv")
 X = df.drop("target", axis=1)
@@ -20,6 +24,8 @@ with mlflow.start_run():
     mlflow.log_param("n_estimators", 100)
     mlflow.log_metric("accuracy", acc)
 
-    mlflow.sklearn.log_model(model, "model")
+    # ✅ Updated
+    mlflow.sklearn.log_model(model, name="model")
 
+    os.makedirs("models", exist_ok=True)
     pickle.dump(model, open("models/model.pkl", "wb"))
