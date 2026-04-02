@@ -5,7 +5,17 @@ import pandas as pd
 import pickle
 import os
 
+if os.path.exists("mlruns"):
+    shutil.rmtree("mlruns")
+
+mlflow.set_tracking_uri("file:./mlruns")
+os.makedirs("mlruns", exist_ok=True)
+
+
+# ✅ Create experiment safely
 mlflow.set_experiment("churn-prediction")
+
+
 
 # Ensure mlruns exists
 mlflow.set_tracking_uri("file:./mlruns")
