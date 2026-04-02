@@ -8,6 +8,7 @@ import os
 mlflow.set_experiment("churn-prediction")
 
 # Ensure mlruns exists
+mlflow.set_tracking_uri("file:./mlruns")
 os.makedirs("mlruns", exist_ok=True)
 
 df = pd.read_csv("data/processed/train.csv")
