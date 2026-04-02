@@ -4,6 +4,7 @@ from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 import pickle
 import os
+import shutil
 
 if os.path.exists("mlruns"):
     shutil.rmtree("mlruns")
